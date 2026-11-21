@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: danceflow
+    runtime: node
+    plan: free
+    rootDir: .
+    buildCommand: npm ci && npm --prefix src/Backend ci && npm run build
+    startCommand: npm --prefix src/Backend start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: VITE_API_URL
+        value: /api
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: OTP_SECRET
+        generateValue: true
